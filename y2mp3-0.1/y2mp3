@@ -1,0 +1,37 @@
+#!/bin/bash
+## Copyright: 2016 C O S M O S project. ## <cosmosproject15@gmail.com>
+## License: GPL-3.0+
+## Homepage : http://cosmosproject2015.tistory.com
+
+if [ ! -d ~/.cache/y2mp3 ]; then
+	mkdir ~/.cache/y2mp3
+fi
+
+di=$PWD
+rm ~/.cache/y2mp3/*
+rm *.webm
+if [ -z $1 ]; then
+	echo "		<< y2mp3 >>
+This program is making youtube to mp3
+
+How to use : y2mp3 {youtube page} {mp3 filename = do not insert '.mp3'}"
+fi
+
+if [ -n $1 ]; then
+	if [ -z "$2" ]; then
+		echo "You need insert want mp3 filename."
+		exit 0
+	fi
+	youtube-dl -F $1 > ~/.cache/y2mp3/a 
+	cat ~/.cache/y2mp3/a |grep audio > ~/.cache/y2mp3/b
+	tail -1 ~/.cache/y2mp3/b > ~/.cache/y2mp3/b1
+	num=`awk '{print $1}' ~/.cache/y2mp3/b1`
+	youtube-dl -f $num $1
+	if [ -n "$2" ]; then
+		ffmpeg -i *.webm -acodec libmp3lame -ab 320k $2.mp3 
+		rm *.webm
+		echo "mp3 making completed."
+		exit 0		
+	fi
+
+fi
