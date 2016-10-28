@@ -1,0 +1,22 @@
+#!/bin/bash
+## Copyright: 2016 C O S M O S project. ## <cosmosproject15@gmail.com>
+## License: GPL-2.0+
+## Homepage : http://cosmosproject2015.tistory.com
+
+mkdir ccomplete
+if [ -d ccomplete ]; then
+	rm ccomplete/*
+fi
+ls -p | grep -v '/$' > .c1
+
+l=`head -1 .c1`
+iconv -c -f euc-kr -t utf-8 "$l" > ccomplete/"$l"
+sed '1d' .c1 > .c2
+while [ -s .c2 ]; do
+	l2=`head -1 .c2`
+	iconv -c -f euc-kr -t utf-8 "$l2" > ccomplete/"$l2"
+	 sed '1d' .c2 > .c1
+	 cp -f .c1 .c2
+done
+
+exit 0
