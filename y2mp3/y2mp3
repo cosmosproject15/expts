@@ -8,16 +8,28 @@ if [ ! -d ~/.cache/y2mp3 ]; then
 fi
 
 di=$PWD
-rm ~/.cache/y2mp3/*
-rm *.webm
+
 if [ -z $1 ]; then
 	echo "		<< y2mp3 >>
 This program is making youtube to mp3
 
-How to use : y2mp3 {youtube page} {mp3 filename = do not insert '.mp3'}"
+Version : 0.2 (Sat, 29 Oct 2016)
+
+need package software 'youtube-dl'
+
+How to use : y2mp3 {youtube page} {wannabe_mp3_filename(do not insert '.mp3'!!)}"
+	exit 0
 fi
 
 if [ -n $1 ]; then
+	if [ ! -s /usr/bin/youtube-dl ]; then
+		echo "You need install package 'youtube-dl'."
+		exit 0
+	fi
+	if [ ! -s /usr/bin/ffmpeg ]; then
+		echo "You need install package 'ffmpeg'."
+		exit 0
+	fi
 	if [ -z "$2" ]; then
 		echo "You need insert want mp3 filename."
 		exit 0
@@ -30,6 +42,7 @@ if [ -n $1 ]; then
 	if [ -n "$2" ]; then
 		ffmpeg -i *.webm -acodec libmp3lame -ab 320k $2.mp3 
 		rm *.webm
+		rm ~/.cache/y2mp3/*
 		echo "mp3 making completed."
 		exit 0		
 	fi

@@ -1,9 +1,9 @@
 # expts
-This repository is experiment softwares factory.
+This repository is experiment programs factory.
 
 ## Softwares
 	1. y2mp3
-		version : 0.1
+		version : 0.2
 		This program is making youtube to mp3
 	2. e2u
 		version : 0.1

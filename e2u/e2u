@@ -1,15 +1,24 @@
 #!/bin/bash
 ## Copyright: 2016 C O S M O S project. ## <cosmosproject15@gmail.com>
-## License: GPL-2.0+
+## License: GPL-3.0+
 ## Homepage : http://cosmosproject2015.tistory.com
 
-mkdir ccomplete
-if [ -d ccomplete ]; then
-	rm ccomplete/*
+if [ ! -d ccomplete ]; then
+	mkdir ccomplete
 fi
+
+
 ls -p | grep -v '/$' > .c1
 
 l=`head -1 .c1`
+if [ ! -s /usr/bin/iconv ]; then
+	echo "You need install package software 'libc-bin'."
+	exit 0
+fi
+if [ -z $l ]; then
+	echo "this folder has Nothing files."
+	exit 0
+fi
 iconv -c -f euc-kr -t utf-8 "$l" > ccomplete/"$l"
 sed '1d' .c1 > .c2
 while [ -s .c2 ]; do
@@ -18,6 +27,11 @@ while [ -s .c2 ]; do
 	 sed '1d' .c2 > .c1
 	 cp -f .c1 .c2
 done
-rm .c1 .c2
+
+echo "complete changes(coding 'euc-kr' to 'utf-8') all files to 'ccomplete' directory."
+
+if [ -s .c1 ]; then
+	rm .c1 .c2
+fi
 
 exit 0
