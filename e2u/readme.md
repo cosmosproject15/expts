@@ -1,4 +1,4 @@
-# w2u
+# e2u
 
 	e2u, euc-kr to utf-8
 	
